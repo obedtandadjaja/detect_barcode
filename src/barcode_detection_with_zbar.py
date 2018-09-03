@@ -29,7 +29,7 @@ class BarcodeDetectionWithZbar:
       number_of_points = len(hull)
 
       for j in xrange(number_of_points):
-        cv2.line(self.image, hull[j], hull[(j+1)%n], (255,0,0), 3)
+        cv2.line(self.image, hull[j], hull[(j + 1) % number_of_points], (255,0,0), 3)
 
     cv2.imshow('Image', self.image)
     cv2.waitKey(0)

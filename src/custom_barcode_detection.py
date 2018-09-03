@@ -18,7 +18,7 @@ class CustomBarcodeDetection:
 
     # compute the Scharr gradient magnitude representation of the images
     # in both the x and y direction
-    ddepth = cv2.cv.CV_32F if imutils.is_cv2() else cv2.CV_32F
+    ddepth = cv2.CV_32F
     gradX = cv2.Sobel(grayscale, ddepth=ddepth, dx=1, dy=0, ksize=-1)
     gradY = cv2.Sobel(grayscale, ddepth=ddepth, dx=0, dy=1, ksize=-1)
 
@@ -31,12 +31,12 @@ class CustomBarcodeDetection:
     (_, thresh) = cv2.threshold(blurred, 225, 255, cv2.THRESH_BINARY)
 
     # construct a closing kernel and apply it to the thresholded image
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (27, 9))
     closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
 
     # perform a series of erosions and dilations
-    eroded = cv2.erode(closed, None, iterations = 4)
-    dilated = cv2.dilate(eroded, None, iterations = 4)
+    eroded = cv2.erode(closed, None, iterations = 10)
+    dilated = cv2.dilate(eroded, None, iterations = 10)
 
     self.processed_image = dilated
 
@@ -44,7 +44,7 @@ class CustomBarcodeDetection:
     self.contours = cv2.findContours(
       self.processed_image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
     )
-    self.contours = self.contours[0] if imutils.is_cv2() else self.contours[1]
+    self.contours = self.contours[1]
 
   def display_result(self):
     for x in xrange(len(self.contours)):
