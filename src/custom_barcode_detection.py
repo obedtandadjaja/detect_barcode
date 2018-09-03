@@ -61,7 +61,7 @@ class CustomBarcodeDetection:
       print 'top-right: ' + str(box[3])
 
       # draw a bounding box arounded the detected barcode and display the image
-      cv2.drawContours(self.image, [box], -1, (0, 255, 0), 3)
+      cv2.drawContours(self.image, [box], -1, (255, 0, 0), 3)
 
     cv2.imshow('Image', self.image)
     cv2.waitKey(0)
